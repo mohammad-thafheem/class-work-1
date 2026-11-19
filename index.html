@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPM Project Hub — Milestones, Issues & Deliverables</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --purple: #a371f7;
+      --yellow: #d29922;
+      --teal: #39c5cf;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-badge {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .stat-badge strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .milestone-section {
+      margin-bottom: 2.25rem;
+    }
+
+    .milestone-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .m1 { background: rgba(88, 166, 255, 0.15); color: var(--accent); border: 1px solid rgba(88, 166, 255, 0.4); }
+    .m2 { background: rgba(63, 185, 80, 0.15); color: var(--green); border: 1px solid rgba(63, 185, 80, 0.4); }
+    .m3 { background: rgba(163, 113, 247, 0.15); color: var(--purple); border: 1px solid rgba(163, 113, 247, 0.4); }
+    .m4 { background: rgba(210, 153, 34, 0.15); color: var(--yellow); border: 1px solid rgba(210, 153, 34, 0.4); }
+    .m5 { background: rgba(57, 197, 207, 0.15); color: var(--teal); border: 1px solid rgba(57, 197, 207, 0.4); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .progress-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      background: var(--bg);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .task-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.88rem;
+      color: #c9d1d9;
+    }
+
+    .task-list input[type="checkbox"] {
+      margin-top: 0.25rem;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    .task-list li.done span {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Software Project Management — Delivery Tracker</h1>
+        <p>Interactive overview of Milestones, GitHub Issues, and Sub-issues</p>
+      </div>
+      <div class="stats">
+        <div class="stat-badge"><strong>5</strong> Milestones</div>
+        <div class="stat-badge"><strong>10</strong> Issues</div>
+        <div class="stat-badge"><strong id="completed-count">0</strong> / <strong>50</strong> Sub-issues Done</div>
+      </div>
+    </header>
+
+    <main id="board"></main>
+
+    <footer>
+      Software Project Management Repository &bull; Tracked via GitHub Projects
+    </footer>
+  </div>
+
+  <script>
+    const milestones = [
+      {
+        badge: "Milestone 1",
+        badgeClass: "m1",
+        title: "Project Initiation & Scope Baseline",
+        issues: [
+          {
+            title: "Issue 1: Project Charter, Scope & Stakeholder Alignment",
+            tasks: [
+              "Define project vision, objectives, and success criteria",
+              "Map stakeholders, roles, communication channels, and escalation paths",
+              "Establish in-scope vs. out-of-scope boundaries and key assumptions",
+              "Document RACI responsibilities across team members",
+              "Record kickoff decisions and initial scope sign-off notes"
+            ]
+          },
+          {
+            title: "Issue 2: Work Breakdown Structure (WBS) & Effort Estimation",
+            tasks: [
+              "Decompose deliverables into granular work packages and tasks",
+              "Estimate effort, story points, or person-hours per task",
+              "Identify task dependencies, critical path items, and milestones",
+              "Flag estimation assumptions and uncertainty buffers",
+              "Validate WBS completeness against project scope"
+            ]
+          }
+        ]
+      },
+      {
+        badge: "Milestone 2",
+        badgeClass: "m2",
+        title: "Planning, Risk & Budget Baseline",
+        issues: [
+          {
+            title: "Issue 3: Schedule, Sprint Planning & Resource Allocation",
+            tasks: [
+              "Build project timeline, milestones, and sprint/iteration calendar",
+              "Assign tasks and workload capacity across team members",
+              "Set up GitHub Project board columns, labels, and milestone views",
+              "Define Definition of Ready (DoR) and Definition of Done (DoD)",
+              "Document sprint/iteration planning outcomes and commitments"
+            ]
+          },
+          {
+            title: "Issue 4: Risk Management & Contingency Planning",
+            tasks: [
+              "Identify technical, schedule, scope, and team risks",
+              "Score probability, impact, and severity for each risk",
+              "Define mitigation actions, contingency plans, and risk owners",
+              "Set early-warning triggers and review cadence for top risks",
+              "Log newly surfaced risks during weekly progress reviews"
+            ]
+          },
+          {
+            title: "Issue 5: Cost, Budget & Resource Tracking",
+            tasks: [
+              "Outline budgeted costs (tools, compute, APIs, contingency reserve)",
+              "Track actual spend/effort against planned baseline",
+              "Calculate schedule/cost variance notes and burn-rate observations",
+              "Document change impact on budget when scope shifts",
+              "Summarize financial/resource status for project checkpoints"
+            ]
+          }
+        ]
+      },
+      {
+        badge: "Milestone 3",
+        badgeClass: "m3",
+        title: "Requirements & Architecture Freeze",
+        issues: [
+          {
+            title: "Issue 6: Requirements, Backlog & Change Control",
+            tasks: [
+              "Capture functional and non-functional requirements with priorities",
+              "Write user stories and acceptance criteria for backlog items",
+              "Define change request workflow and approval rules",
+              "Log scope/requirement change requests and impact assessments",
+              "Maintain traceability between requirements, tasks, and deliverables"
+            ]
+          },
+          {
+            title: "Issue 7: Architecture, Workflow & Technical Standards",
+            tasks: [
+              "Document system overview, modules, and data/control flow",
